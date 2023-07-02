@@ -17,8 +17,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="left"
             android:src="@mipmap/ic_backbtn"/>
-
-
     </LinearLayout>
 
     <View
