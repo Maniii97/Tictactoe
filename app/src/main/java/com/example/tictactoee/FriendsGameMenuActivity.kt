@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.widget.Button
+import android.widget.Toast
 import pl.droidsonroids.gif.GifImageView
 
 class FriendsGameMenuActivity : AppCompatActivity() {
@@ -20,8 +21,12 @@ class FriendsGameMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_friends_game_menu)
+
+        if (supportActionBar != null) {
+            supportActionBar!!.hide()
+        }
+
         btnRoom = findViewById(R.id.btnRoom)
         btnThisdevice = findViewById(R.id.btnThisdevice)
         gifSetting = findViewById(R.id.gifSetting)
@@ -47,12 +52,14 @@ class FriendsGameMenuActivity : AppCompatActivity() {
         }
 
         btnRoom.setOnClickListener {
-            Intent(this,FriendsGameRoomActivity::class.java).also {
+
+//            Toast.makeText(this,"This feature will be available soon", Toast.LENGTH_LONG).show()
+           Intent(this,FriendsGameRoomActivity::class.java).also {
                 startActivity(it)
-            }
+           }
         }
         btnThisdevice.setOnClickListener {
-            Intent(this, FriendsGameActivity::class.java).also{
+            Intent(this, FriendChooseSymbolActivity::class.java).also{
                 startActivity(it)
             }
         }
