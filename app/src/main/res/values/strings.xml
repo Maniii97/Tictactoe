@@ -2,6 +2,8 @@
     <string name="app_name">TicTacToe</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
+    <string name="webclient_id">716650224928-4bie9v5qiou8imnu8qhbh05q8kbgfr0n.apps.googleusercontent.com</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

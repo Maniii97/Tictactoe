@@ -31,6 +31,10 @@ class GameMenuActivity : AppCompatActivity(), OnTouchListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_menu)
 
+        if (supportActionBar != null) {
+            supportActionBar!!.hide()
+        }
+
         SCREEN_SIZE = getScreenResolution(this)
         SET_TRANSLATE = if (SCREEN_SIZE > 1500) {
             -560
@@ -70,7 +74,7 @@ class GameMenuActivity : AppCompatActivity(), OnTouchListener {
             }
         }
         btnWithBot.setOnClickListener {
-            Intent(this,BotGameActivity::class.java).also{
+            Intent(this,BotChooseSymbolActivity::class.java).also{
                 startActivity(it)
             }
         }
