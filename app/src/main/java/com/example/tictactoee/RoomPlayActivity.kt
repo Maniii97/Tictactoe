@@ -93,6 +93,8 @@ class RoomPlayActivity : AppCompatActivity(), View.OnClickListener {
         box8 = findViewById(R.id.iv8)
         box9 = findViewById(R.id.iv9)
 
+        Boxes = arrayOf(box1, box2, box3, box4, box5, box6, box7, box8, box9)
+
         box1.setOnClickListener(this)
         box2.setOnClickListener(this)
         box3.setOnClickListener(this)
@@ -128,7 +130,7 @@ class RoomPlayActivity : AppCompatActivity(), View.OnClickListener {
         val clickImg = view as ImageView
         val getTag = view.tag.toString().toInt()
 
-        if (isGameActive && activePlayer == gameCode && filledPos[getTag - 1] == -1) {
+        if (isGameActive && activePlayer == "X" && filledPos[getTag - 1] == -1) {
             if (Services.VIBRATION_CHECK) {
                 if (Build.VERSION.SDK_INT >= 26) {
                     vibrator.vibrate(
@@ -150,6 +152,28 @@ class RoomPlayActivity : AppCompatActivity(), View.OnClickListener {
             gameRef.child("filledPositions").setValue(filledPos.toList())
             gameRef.child("activePlayer").setValue(activePlayer)
 
+
+        } else if (isGameActive && activePlayer == "O" && filledPos[getTag - 1] == -1) {
+            if (Services.VIBRATION_CHECK) {
+                if (Build.VERSION.SDK_INT >= 26) {
+                    vibrator.vibrate(
+                        VibrationEffect.createOneShot(
+                            200,
+                            VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                    )
+                } else {
+                    vibrator.vibrate(200)
+                }
+            }
+            if (Services.SOUND_CHECK) {
+                // play sound
+            }
+            clickImg.setImageResource(R.drawable.circle)
+            filledPos[getTag - 1] = pX
+            activePlayer = if (gameCode == "O") "X" else "O"
+            gameRef.child("filledPositions").setValue(filledPos.toList())
+            gameRef.child("activePlayer").setValue(activePlayer)
 
         }
     }
