@@ -183,7 +183,7 @@ class FriendsGameActivity : AppCompatActivity(), View.OnClickListener {
             clickImg.setImageResource(R.drawable.circle)
             sActivePlayer = pX
             activePlayer = sActivePlayer
-            side = pO
+            side = pX
             filledPos[(getTag - 1)] = pO
 
             checkForWin()
