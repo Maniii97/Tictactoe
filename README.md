@@ -3,4 +3,3 @@
  #2 play with friend (both online and offline modes )
  #3 login feature 
 
- (App is currently in build phase, this is not the complete version)
