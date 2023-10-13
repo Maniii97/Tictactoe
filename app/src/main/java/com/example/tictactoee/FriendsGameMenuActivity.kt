@@ -1,16 +1,11 @@
 package com.example.tictactoee
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.drawable.Animatable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.view.MotionEvent
-import android.view.View
-import android.view.View.OnTouchListener
 import android.widget.Button
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import pl.droidsonroids.gif.GifImageView
 
 class FriendsGameMenuActivity : AppCompatActivity() {
