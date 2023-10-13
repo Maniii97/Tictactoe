@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.mikhaellopez.circularimageview.CircularImageView
 import pl.droidsonroids.gif.GifImageView
+import kotlin.properties.Delegates
 
 class RoomPlayActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -60,6 +61,9 @@ class RoomPlayActivity : AppCompatActivity(), View.OnClickListener {
     private val pO: Int = 1
     private val sActivePlayer: Int = 0
 
+    private lateinit var Id : String
+    var isHost by Delegates.notNull<Boolean>()
+
 
     private lateinit var Boxes: Array<ImageView>
 
@@ -72,6 +76,8 @@ class RoomPlayActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_room_play)
 
         val roomCode = intent.getStringExtra("roomCode")
+         Id = intent.getStringExtra("playerId").toString()
+         isHost = intent.getBooleanExtra("isHost",false)
 
         supportActionBar?.hide()
 
@@ -104,6 +110,13 @@ class RoomPlayActivity : AppCompatActivity(), View.OnClickListener {
         box7.setOnClickListener(this)
         box8.setOnClickListener(this)
         box9.setOnClickListener(this)
+
+        if (isHost){
+            side = 0
+        }
+        else if(!isHost){
+            side = 1
+        }
 
         gifSettings.setOnClickListener {
             val drawable = gifSettings.drawable

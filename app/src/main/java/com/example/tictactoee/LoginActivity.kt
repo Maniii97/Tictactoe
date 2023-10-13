@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
 
         btnSignin.setOnClickListener {
             savingUsername()
-            if (uidSaved) {
+ //           if (uidSaved) {
                 val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.webclient_id))
                     .requestEmail()
@@ -68,10 +68,10 @@ class LoginActivity : AppCompatActivity() {
                 signinClient.signInIntent.also {
                     startActivityForResult(it, 0)
                 }
-            }
-            else{
-                Toast.makeText(this,"Username not saved, try again ",Toast.LENGTH_LONG).show()
-            }
+  //          }
+  //          else{
+  //              Toast.makeText(this,"Username not saved, try again ",Toast.LENGTH_LONG).show()
+  //          }
 
         }
     }

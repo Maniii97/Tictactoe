@@ -10,11 +10,13 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.tictactoee.R.*
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 
 class FriendsGameRoomActivity : AppCompatActivity() {
 
@@ -22,8 +24,13 @@ class FriendsGameRoomActivity : AppCompatActivity() {
     var isHost : Boolean = false
     var isOpponentReady: Boolean = false
 
+    val user = Firebase.auth.currentUser
+
     lateinit var btnCreate : Button
     lateinit var btnJoin : Button
+
+    lateinit var OppID : String
+    lateinit var HostID : String
 
 
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://tictactoee-b12f6-default-rtdb.firebaseio.com/")
@@ -69,7 +76,7 @@ class FriendsGameRoomActivity : AppCompatActivity() {
                     val readyStatus = snapshot.getValue(Boolean::class.java)
                     if ((readyStatus != null) && readyStatus) {
                         isOpponentReady = true
-                        startGame(roomCode)
+                        startGame(roomCode, playerId = OppID ,false)
                     }
                 }
 
@@ -79,10 +86,12 @@ class FriendsGameRoomActivity : AppCompatActivity() {
             })
     }
 
-    private fun startGame(roomCode: String) {
+    private fun startGame(roomCode: String,playerId : String, isHost : Boolean) {
         Intent(this,RoomPlayActivity::class.java).also {
             startActivity(it)
             it.putExtra("roomCode",roomCode)
+            it.putExtra("playerId",playerId)
+            it.putExtra("isHost",isHost)
         }
     }
 
@@ -102,6 +111,11 @@ class FriendsGameRoomActivity : AppCompatActivity() {
         dialog.setCanceledOnTouchOutside(false)
         dialog.setCancelable(false)
 
+        val host = true
+        HostID = user?.let {
+            val uid = it.uid
+        }.toString()
+
         dialog.show()
 
         val start = dialog.findViewById<Button>(id.start)
@@ -111,7 +125,7 @@ class FriendsGameRoomActivity : AppCompatActivity() {
             if(isOpponentReady){
                 // start game activity
                 dialog.dismiss()
-                startGame(roomCode)
+                startGame(roomCode,HostID,true)
             }
             else{
                 Toast.makeText(this,"Wait for the Opponent to join",Toast.LENGTH_LONG).show()
@@ -133,6 +147,12 @@ class FriendsGameRoomActivity : AppCompatActivity() {
         val join = dialog.findViewById<Button>(id.join)
 
         val code = etRoomCode.text.toString()
+        val host = false
+
+        OppID = user?.let {
+            val uid = it.uid
+        }.toString()
+
 
         dialog.show()
 
@@ -146,7 +166,7 @@ class FriendsGameRoomActivity : AppCompatActivity() {
                         isOpponentReady = true
                         dialog.dismiss()
                         databaseReference.child("rooms").child(code).child("isOpponentReady").setValue(true)
-                        startGame(code)
+                        startGame(code,OppID,host)
                     } else {
                         Toast.makeText(this, "Entered Room Key is Incorrect", Toast.LENGTH_LONG).show()
                     }
